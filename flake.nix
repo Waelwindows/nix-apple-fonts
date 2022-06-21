@@ -16,12 +16,7 @@
     flake-utils,
     ...
   }:
-    {
-      overlay = final: prev: {
-        sf-mono-font = final.callPackage self.packages.sf-mono-font {};
-      };
-    }
-    // flake-utils.lib.eachDefaultSystem (system: let
+    flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
 
       sources = {
@@ -87,5 +82,6 @@
         // {
           default = packages.sf-mono;
         };
+      overlays.default = final: prev: packages;
     });
 }
