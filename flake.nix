@@ -84,7 +84,8 @@
               # license = licenses.unfree;
               maintainers = [ maintainers.pinpox ];
             };
-          }) sources);
-        defaultPackage = packages.sf-mono;
+          }) sources) // {
+           default = packages.sf-mono;
+         };
       });
 }
