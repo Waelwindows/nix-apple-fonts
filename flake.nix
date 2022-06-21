@@ -24,28 +24,28 @@
           sf-compact = {
             url =
               "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg";
-            sha256 = "sha256-U3F91nQki5W1vpb7Yitvr3mPK7b5eyqkGv8iJynVdPI=";
+            sha256 = "sha256-SIht9sqmeijEeU4uLwm+tlZtFlTnD/G5GH8haUL6dlU=";
           };
 
           sf-pro = {
             url =
               "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg";
-            sha256 = "sha256-P69DHx/V0NoDcI6jrZdlhbpjrdHo8DEGT+2yg5jYw/M=";
+            sha256 = "sha256-g/SzgU3vOzm8uRuA6AN/N8Tnrl2Vpya58hx99dGfecI=";
           };
           sf-mono = {
             url =
               "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg";
-            sha256 = "sha256-8niJPk3hGfK1USIs9eoxZ6GlM4aZ7ZObmQj2Zomj+Go=";
+            sha256 = "sha256-jnhTTmSy5J8MJotbsI8g5hxotgjvyDbccymjABwajYw=";
           };
           sf-arabic = {
             url =
               "https://devimages-cdn.apple.com/design/resources/download/SF-Arabic.dmg";
-            sha256 = "sha256-P69DHx/V0NoDcI6jrZdlhbpjrdHo8DEGT+2yg5jYw/O=";
+            sha256 = "sha256-99vnv+z3liEhaHw4rqdGcAOe74fPuWmMiBmLLd3/DP0=";
           };
           new-york = {
             url =
               "https://devimages-cdn.apple.com/design/resources/download/NY.dmg";
-            sha256 = "sha256-P69DHx/V0NoDcI6jrZdlhbpjrdHo8DEGT+2yg5jYw/O=";
+            sha256 = "sha256-Rr0UpJa7kemczCqNn6b8HNtW6PiWO/Ez1LUh/WNk8S8=";
           };
         };
 
