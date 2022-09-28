@@ -82,6 +82,7 @@
         // {
           default = packages.sf-mono;
         };
-      overlays.default = final: prev: packages;
-    });
+    }) // {
+      overlays.default = final: prev: self.packages;
+    };
 }
