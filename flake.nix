@@ -16,9 +16,7 @@
     flake-utils,
     ...
   }:
-    flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-
+    let
       sources = {
         sf-compact = {
           url = "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg";
@@ -42,9 +40,7 @@
           sha256 = "sha256-Rr0UpJa7kemczCqNn6b8HNtW6PiWO/Ez1LUh/WNk8S8=";
         };
       };
-    in rec {
-      packages =
-        flake-utils.lib.flattenTree (pkgs.lib.mapAttrs (name: value:
+      mkFont = pkgs: (name: value:
           pkgs.stdenv.mkDerivation {
             pname = "${name}-font";
             version = "1.0";
@@ -77,12 +73,18 @@
               # license = licenses.unfree;
               maintainers = [maintainers.pinpox];
             };
-          })
-        sources)
+          });
+    in
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+
+    in rec {
+      packages =
+        flake-utils.lib.flattenTree (pkgs.lib.mapAttrs (mkFont pkgs) sources)
         // {
           default = packages.sf-mono;
         };
     }) // {
-      overlays.default = final: prev: self.packages;
+      overlays.default = final: prev: prev.lib.mapAttrs (mkFont final) sources;
     };
 }
