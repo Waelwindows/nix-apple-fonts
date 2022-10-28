@@ -8,47 +8,42 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
+    sf-compact = {
+      url = "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg";
+      flake = false;
+    };
+    sf-pro = {
+      url = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg";
+      flake = false;
+    };
+    sf-mono = {
+      url = "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg";
+      flake = false;
+    };
+    sf-arabic = {
+      url = "https://devimages-cdn.apple.com/design/resources/download/SF-Arabic.dmg";
+      flake = false;
+    };
+    new-york = {
+      url = "https://devimages-cdn.apple.com/design/resources/download/NY.dmg";
+      flake = false;
+    };
   };
 
-  outputs = {
+  outputs = inputs@{
     self,
     nixpkgs,
     flake-utils,
     ...
   }:
     let
-      sources = {
-        sf-compact = {
-          url = "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg";
-          sha256 = "sha256-7gRJxuB+DOxS6bzHXFNjNH2X4kmO1MhJN2zK5he2XRU=";
-        };
-
-        sf-pro = {
-          url = "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg";
-          sha256 = "sha256-HtJ/KdIVOdYocuzQ8qkzTAm7bMITCq3Snv+Bo9WO9iA=";
-        };
-        sf-mono = {
-          url = "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg";
-          sha256 = "sha256-ulmhu5kXy+A7//frnD2mzBs6q5Jx8r6KwwaY7gmoYYM=";
-        };
-        sf-arabic = {
-          url = "https://devimages-cdn.apple.com/design/resources/download/SF-Arabic.dmg";
-          sha256 = "sha256-8382K8rq/Myas47Pe0SZ6ZpmQljz2ut+X8Orkm1yemo=";
-        };
-        new-york = {
-          url = "https://devimages-cdn.apple.com/design/resources/download/NY.dmg";
-          sha256 = "sha256-Rr0UpJa7kemczCqNn6b8HNtW6PiWO/Ez1LUh/WNk8S8=";
-        };
-      };
-      mkFont = pkgs: (name: value:
+      sources = with inputs; { inherit sf-compact sf-pro sf-mono sf-arabic new-york; };
+      mkFont = pkgs: (name: src:
           pkgs.stdenv.mkDerivation {
+            inherit src;
+
             pname = "${name}-font";
             version = "1.0";
-
-            src = pkgs.fetchurl {
-              url = value.url;
-              sha256 = value.sha256;
-            };
 
             nativeBuildInputs = [pkgs.p7zip];
 
