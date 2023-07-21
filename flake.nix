@@ -30,56 +30,55 @@
     };
   };
 
-  outputs = inputs@{
+  outputs = inputs @ {
     self,
     nixpkgs,
     flake-utils,
     ...
-  }:
-    let
-      sources = with inputs; { inherit sf-compact sf-pro sf-mono sf-arabic new-york; };
-      mkFont = pkgs: (name: src:
-          pkgs.stdenv.mkDerivation {
-            inherit src;
+  }: let
+    sources = with inputs; {inherit sf-compact sf-pro sf-mono sf-arabic new-york;};
+    mkFont = pkgs: (name: src:
+      pkgs.stdenv.mkDerivation {
+        inherit src;
 
-            pname = "${name}-font";
-            version = "1.0";
+        pname = "${name}-font";
+        version = "1.0";
 
-            nativeBuildInputs = [pkgs.p7zip];
+        nativeBuildInputs = [pkgs.p7zip];
 
-            unpackCmd = ''
-              7z x $curSrc
-              find . -name "*.pkg" -print -exec 7z x {} \;
-              find . -name "Payload~" -print -exec 7z x {} \;
-            '';
+        unpackCmd = ''
+          7z x $curSrc
+          find . -name "*.pkg" -print -exec 7z x {} \;
+          find . -name "Payload~" -print -exec 7z x {} \;
+        '';
 
-            sourceRoot = "./Library/Fonts";
+        sourceRoot = "./Library/Fonts";
 
-            dontBuild = true;
+        dontBuild = true;
 
-            installPhase = ''
-              find . -name '*.ttf' -exec install -m444 -Dt $out/share/fonts/truetype {} \;
-              find . -name '*.otf' -exec install -m444 -Dt $out/share/fonts/opentype {} \;
-            '';
+        installPhase = ''
+          find . -name '*.ttf' -exec install -m444 -Dt $out/share/fonts/truetype {} \;
+          find . -name '*.otf' -exec install -m444 -Dt $out/share/fonts/opentype {} \;
+        '';
 
-            meta = with pkgs.lib; {
-              homepage = "https://developer.apple.com/fonts/";
-              description = "Apple fonts";
-              # license = licenses.unfree;
-              maintainers = [maintainers.pinpox];
-            };
-          });
-    in
+        meta = with pkgs.lib; {
+          homepage = "https://developer.apple.com/fonts/";
+          description = "Apple fonts";
+          # license = licenses.unfree;
+          maintainers = [maintainers.pinpox];
+        };
+      });
+  in
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-
     in rec {
       packages =
         flake-utils.lib.flattenTree (pkgs.lib.mapAttrs (mkFont pkgs) sources)
         // {
           default = packages.sf-mono;
         };
-    }) // {
+    })
+    // {
       overlays.default = final: prev: prev.lib.mapAttrs (mkFont final) sources;
     };
 }
