@@ -77,6 +77,7 @@
         // {
           default = packages.sf-mono;
         };
+      formatter = pkgs.alejandra;
     })
     // {
       overlays.default = final: prev: prev.lib.mapAttrs (mkFont final) sources;
